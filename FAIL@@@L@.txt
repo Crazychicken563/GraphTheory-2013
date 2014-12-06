@@ -1,0 +1,35 @@
+ else { //min span tree
+                    ArrayList<Edge> temp = new ArrayList<>(edges);
+                    //sort edges from largest to smallest
+                    while (!temp.isEmpty()) {
+                        double largest = Integer.MIN_VALUE;
+                        int maxIndex = 0;
+                        for (int i = 0; i < temp.size(); i++) {
+                            if (temp.get(i).weight() > largest) {
+                                largest = temp.get(i).weight();
+                                maxIndex = i;
+                            }
+                        }
+                        pathEdges.add(temp.remove(maxIndex));
+                    }
+                    boolean removing = true;
+                    while (removing) {
+                        removing = false;
+                        Node curr;
+                        Node next;
+                        Edge edge;
+                        for (int i = 0; i < pathEdges.size(); i++) {
+                            edge = pathEdges.get(i);
+                            curr = edge.getNode()[0];
+                            next = edge.getNode()[1];
+                            if (curr.canRemoveEdge() && next.canRemoveEdge()) {
+                                curr.removeEdge(edge);
+                                next.removeEdge(edge);
+                                pathEdges.remove(i);
+                                i--;
+                                removing = true;
+                            }
+                        }
+                    }
+                    System.out.println(pathEdges);
+                }

@@ -1,0 +1,32 @@
+else { //MINIMUMSPANNINGTERREERR
+                    //pathEdges = edges;
+                    
+                    Node curr;
+                    Node next;
+                    int minIndex = 0;
+                    for (int i = 0; i < nodes.size(); i++) {
+                        curr = nodes.get(i);
+                        if (!curr.wasVisited()) {//not necessary
+                            curr.visit();
+                            ArrayList<Edge> currEdges = curr.getEdges();
+                            double minWeight = Integer.MAX_VALUE;
+                            for (int j = 0; j < currEdges.size(); j++) {
+                                if (currEdges.get(j).weight() < minWeight) {
+                                    minWeight = currEdges.get(j).weight();
+                                    minIndex = j;
+                                }
+                            }
+                            Edge connector = curr.getEdges().get(minIndex);
+                            if (connector.getNode()[0].equals(curr)) {
+                                next = connector.getNode()[1];
+                            } else {
+                                next = connector.getNode()[0];
+                            }
+                            //next.visit();
+                            pathEdges.add(connector);
+                        }
+                    }//
+                    //System.out.println(pathEdges);
+                }
+
+KINDOFWORKS

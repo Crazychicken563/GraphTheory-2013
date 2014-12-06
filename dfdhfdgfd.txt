@@ -1,0 +1,43 @@
+else { //MINIMUMSPANNINGTERREERR
+                    //pathEdges = new ArrayList<>();
+                    Set<Node> mst = new HashSet<>();
+                    Node curr = nodes.get(0);
+                    Node next;
+                    while (mst.size() < nodes.size()) {
+                        ArrayList<Edge> currEdges = curr.getEdges();
+                        double minWeight = Integer.MAX_VALUE;
+                        int minIndex = 0;
+                        for (int j = 0; j < currEdges.size(); j++) {
+                            if (currEdges.get(j).weight() < minWeight && !curr.inMst(currEdges.get(j))) {
+                                minWeight = currEdges.get(j).weight();
+                                minIndex = j;
+                            }
+                        }
+                        Edge connector = currEdges.get(minIndex);
+                        if (connector.getNode()[0].equals(curr)) {
+                            next = connector.getNode()[1];
+                        } else {
+                            next = connector.getNode()[0];
+                        }
+                        if (curr.numMstEdges() == 0 || next.numMstEdges() == 0) {
+                            pathEdges.add(connector);
+                            mst.add(curr);
+                            mst.add(next);
+                            curr.addMstEdge(connector);
+                            next.addMstEdge(connector);
+                            //curr = next;
+                        } else {
+                            mst.add(curr);
+                            mst.add(next);
+                            curr.addMstEdge(connector);
+                            next.addMstEdge(connector);
+                        }
+                        curr = next;
+                        repaint();
+                        //try {
+                        //    Thread.sleep(1000);
+                        //} catch (Exception e) {
+                        //}
+                    }
+                    System.out.println(pathEdges);
+                }
